@@ -6,7 +6,8 @@ class TodoList extends Component {
         this.state = {
             list:[{
                 name:'test',status:0
-            }]
+            }],
+            inputVal:''
         }
     }
 
@@ -32,6 +33,25 @@ class TodoList extends Component {
         })
     }
 
+    handleChange(e) {
+        this.setState({
+            inputVal: e.target.value
+        })
+    }
+
+    addTask() {
+        if(!this.state.inputVal) return
+        this.setState({
+            list: [
+                ...this.state.list,{
+                    name: this.state.inputVal,
+                    status: 0
+                }
+            ],
+            inputVal:''
+        })
+    }
+
     render(){
         return (
             <div className="Todolist">
@@ -40,8 +60,10 @@ class TodoList extends Component {
                     deleteItem={this.deleteItem1.bind(this)}
                     completeTask={this.completeTask1.bind(this)} />
                 <footer>
-                    <input type="text" placeholder="addtodo"></input>
-                    <button className="addTodo">Add</button>
+                    <input type="text" placeholder="addtodo"
+                        onChange={this.handleChange.bind(this)}></input>
+                    <button className="addTodo"
+                        onClick={this.addTask.bind(this)}>Add</button>
                 </footer>
             </div>
         );
